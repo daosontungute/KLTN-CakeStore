@@ -40,6 +40,7 @@ router.post('/',  function(req, res) {
     newcake.sale = req.body.sale;
     newcake.quantity = 100;
     newcake.rate = 0;
+    newcake.spdacbiet = false
     newcake.save(function(err, insertedcake) {
         if (err) {
             console.log('Err Saving cake');
@@ -60,11 +61,10 @@ router.put('/:id',  function(req, res) {
                     categoryID: req.body.categoryID,
                     priceCake: req.body.priceCake,
                     detailCake: req.body.detailCake,
-                  
                     imgCake: req.body.imgCake,
                     sale: req.body.sale,
                     quantity: req.body.quantity,
-
+                    spdacbiet: req.body.spdacbiet
                 }
             }, {
                 new: true
@@ -95,6 +95,19 @@ router.get('/findbycategory/:category_id', function(req, res) {
             .exec(function(err, cakes) {
                 if (err) console.log("Error retrieving cakes");
                 else { res.json(cakes); }
+            });
+    })
+
+//get cake by category and is spdacbiet
+router.get('/findbycategoryspecial/:category_id', function(req, res) {
+        cake.find({
+                categoryID: req.params.category_id               
+            })
+            .exec(function(err, cakes) {
+                if (err) console.log("Error retrieving cakes");
+                else { 
+                    cakes = cakes.filter(cake => cake.spdacbiet == true);
+                    res.json(cakes); }
             });
     })
 

@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
 		  });
 		  
 		  //this.category_id = localStorage.getItem('category_id');
-		  this.getCakeByCategory('5fe5a55531a1704d7086c60f');
+		  this.getCakeByCategoryspcecial('5fe5a55531a1704d7086c60f');
 		  this.refreshCategoryList();
 		  this.refreshCakeList();
 	}
@@ -563,8 +563,15 @@ export class HomeComponent implements OnInit {
 		  console.log(this.CakeByCategory);
 		});
 		this.refreshCakeList();
-  }
-
+  	}
+	  getCakeByCategoryspcecial(idCategory){
+		this.cakeService.getCakeByCategoryIdspecial(idCategory)
+		.subscribe(resCategoryData => {
+		  this.CakeByCategory = resCategoryData as Cake[];
+		  console.log(this.CakeByCategory);
+		});
+		this.refreshCakeList();
+  	}
   goToHome(){
     this._router.navigate(['/homePage'])
   }

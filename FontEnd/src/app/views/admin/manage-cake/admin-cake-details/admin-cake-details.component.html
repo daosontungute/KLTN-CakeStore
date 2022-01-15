@@ -46,7 +46,13 @@
                                      value="{{categoryService.category?.nameCategory}}" disabled>
                                 </div>
                             </div>
-
+                            <div class="col-sm-4">
+                                <label>Sản Phẩm Đặt Biệt</label>&nbsp;
+                                <div>
+                                    <!-- <mat-checkbox class="example-margin" [checked]="spdacbiet"></mat-checkbox> -->
+                                    <input class="example-margin" type="checkbox" #name="ngModel" name="spdacbiet" [(ngModel)]="cakeService.selectedCake.spdacbiet" disabled>   
+                                </div>
+                            </div>
                           
 
                         </div>

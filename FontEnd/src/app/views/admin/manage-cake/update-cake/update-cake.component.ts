@@ -67,6 +67,7 @@ export class UpdateCakeComponent implements OnInit {
       count: null,
       quantity:null,
       rate:null,
+      spdacbiet : false
     }
   }
   getCakeCategoryById(id:string) {
@@ -99,8 +100,8 @@ export class UpdateCakeComponent implements OnInit {
         if (confirm('Bạn có muốn cập nhật sản phẩm này không ?') == true) {
           // form.value.imgMonAn =  $('input[type=file]').val().replace(/C:\\fakepath\\/i, '');
           let id = this.route.snapshot.paramMap.get('id');
-        form.value._id = id;
-       
+        form.value._id = id
+             
         this.cakeService.putCake(form.value).subscribe(
          data => {console.log(data);
           this.alertSucess = true;

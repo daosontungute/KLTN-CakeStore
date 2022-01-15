@@ -222,7 +222,7 @@ async function CustomPriceByMonth(Data, month, price, arrayOrderDetails) {
 router.post('/TotalPriceOnEachMonth', function(req, res) {
     async function run() {
         var totalPriceOnMonth = 0.0
-        var yearCheck = req.body.checkYear
+        var yearCheck = req.body.yearCheck
         console.log("year:" + yearCheck)
         const orderArray = await getAllOrder(req, res);
         let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]

@@ -110,10 +110,10 @@ app.use(expressJWT({ secret: superSecret })
                 url: /^\/cakes.*/,
                 methods: ['GET', 'POST']
             },
-            // {
-            //     url: /^\/statistic.*/,
-            //     methods: ['GET', 'POST']
-            // },
+            {
+                url: /^\/statistic.*/,
+                methods: ['GET', 'POST']
+            },
             {
                 url: /^\/favorites.*/,
                 methods: ['GET', 'POST']

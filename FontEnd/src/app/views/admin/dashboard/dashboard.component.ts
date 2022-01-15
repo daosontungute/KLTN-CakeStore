@@ -55,7 +55,8 @@ export class DashboardComponent implements OnInit {
       }
       this.doughnutChartType = 'doughnut';
     })
-   this.TotalPriceOnEachMonth();
+    this.totalMonth.yearCheck = "2021"
+    this.TotalPriceOnEachMonth();
   
     $('#field_month').addClass("readonly-wrapper");
     $('#select_month').addClass("readonly-block");
@@ -72,12 +73,12 @@ export class DashboardComponent implements OnInit {
 
  
   
-    this.statisticService.TotalPriceOnYear(2020).subscribe(total => {
+    this.statisticService.TotalPriceOnYear(2021).subscribe(total => {
       this.totalYear = total["totalPriceOnYear"]
       this.countCakeBuy = total["CountBoodBuy"]
       this.countAllUser= total["CountUser"]
     }) 
-    this.statisticService.BestUserOnYear(2020).subscribe(total => {
+    this.statisticService.BestUserOnYear(2021).subscribe(total => {
       this.bestUser = total
       this.totalYearOfCustomer =  this.bestUser.totalPrice
       if(this.bestUser.userID == 'not found'){
@@ -91,13 +92,26 @@ export class DashboardComponent implements OnInit {
     })
   }
   yearCheck: Date = new Date()
-  TotalPriceByMonth = []
+  arraydata = [{ "month": "Jan", "totalPrice": 0, "count": 0 },
+  { "month": "Feb", "totalPrice": 0, "count": 0 },
+  { "month": "Mar", "totalPrice": 0, "count": 0 },
+  { "month": "Apr", "totalPrice": 0, "count": 0 },
+  { "month": "May", "totalPrice": 0, "count": 0 },
+  { "month": "Jun", "totalPrice": 0, "count": 0 },
+  { "month": "Jul", "totalPrice": 0, "count": 0 },
+  { "month": "Aug", "totalPrice": 0, "count": 0 },
+  { "month": "Sep", "totalPrice": 0, "count": 0 },
+  { "month": "Oct", "totalPrice": 0, "count": 0 },
+  { "month": "Nov", "totalPrice": 0, "count": 0 },
+  { "month": "Dec", "totalPrice": 0, "count": 0 },]
+  TotalPriceByMonth=[]
   TotalCakeByMonth = []
-  TotalPriceOnEachMonth(){
-    this.totalMonth.yearCheck = "2021"
+  //totalMonth.yearCheck = "2021"
+  TotalPriceOnEachMonth(){   
     this.statisticService.TotalPriceOnEachMonth(this.totalMonth).subscribe(res => {
       // this.TotalPriceByMonth = 
-      console.log("res: "+res)
+      //this.totalMonth.yearCheck = 
+      console.log("res: "+this.totalMonth.yearCheck)
       this.barChartOptions = {
         scaleShowVerticalLines: false,
         responsive: true
@@ -107,9 +121,19 @@ export class DashboardComponent implements OnInit {
       this.barChartLegend = true
       for(let i in (res as [])){
         console.log(res[i])
-        this.TotalPriceByMonth.push(res[i].totalPrice)
-        this.TotalCakeByMonth.push(res[i].count)
+        for(let index in this.arraydata){
+          if(res[i].month == this.arraydata[index].month){
+            this.arraydata[index].totalPrice = res[i].totalPrice
+            this.arraydata[index].count = res[i].count
+          }
+        }        
       }
+      for(let index in this.arraydata){
+        this.TotalPriceByMonth.push(this.arraydata[index].totalPrice)
+        this.TotalCakeByMonth.push(this.arraydata[index].count)
+      }
+      //console.log("totalprice: "+this.TotalPriceByMonth)
+      //console.log("totalprice1: "+this.TotalPriceByMonth1)
       this.barChartData = [  {data: this.TotalCakeByMonth, label: 'Số lượng sản phẩm bán'},
                              {data: this.TotalPriceByMonth, label: 'Doanh thu'}  ]
     })
@@ -147,6 +171,23 @@ export class DashboardComponent implements OnInit {
  changeYear(year){
   this.selectedYear = year
   this.customCheckMonthAndYear()
+  this.totalMonth.yearCheck = year
+  this.TotalPriceByMonth = []
+  this.TotalCakeByMonth = []
+  this.arraydata = [{ "month": "Jan", "totalPrice": 0, "count": 0 },
+  { "month": "Feb", "totalPrice": 0, "count": 0 },
+  { "month": "Mar", "totalPrice": 0, "count": 0 },
+  { "month": "Apr", "totalPrice": 0, "count": 0 },
+  { "month": "May", "totalPrice": 0, "count": 0 },
+  { "month": "Jun", "totalPrice": 0, "count": 0 },
+  { "month": "Jul", "totalPrice": 0, "count": 0 },
+  { "month": "Aug", "totalPrice": 0, "count": 0 },
+  { "month": "Sep", "totalPrice": 0, "count": 0 },
+  { "month": "Oct", "totalPrice": 0, "count": 0 },
+  { "month": "Nov", "totalPrice": 0, "count": 0 },
+  { "month": "Dec", "totalPrice": 0, "count": 0 },]
+  //this.barChartData = [];
+  this.TotalPriceOnEachMonth()
 }
  totalMonth: TotalMonth = new TotalMonth();
   changeMonth(month){
@@ -165,7 +206,7 @@ export class DashboardComponent implements OnInit {
     this.statisticService.TotalPriceOnYear(this.selectedYear).subscribe(total => {
       console.log(total)
       this.totalYear = total["totalPriceOnYear"]
-      this.countCakeBuy = total["CountBoodBuy"]
+      this.countCakeBuy = total["CountCakeBuy"]
       this.countAllUser= total["CountUser"]
     })
     this.statisticService.BestUserOnYear(this.selectedYear).subscribe(total => {
@@ -196,7 +237,7 @@ if(this.selectedMonth!=null && this.clickMonth==true){
     this.statisticService.TotalPriceOnMonth(this.totalMonth).subscribe(total => {
   
       this.totalYear = total["totalPriceOnMonth"]
-      this.countCakeBuy = total["CountBoodBuy"]
+      this.countCakeBuy = total["CountCakeBuy"]
       this.countAllUser= total["CountUser"]
     })
     this.statisticService.BestUserOnMonth(this.totalMonth).subscribe(total => {

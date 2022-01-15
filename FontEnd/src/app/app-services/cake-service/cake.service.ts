@@ -29,6 +29,9 @@ export class CakeService {
   getCakeByCategoryId(category_id: string) {
     return this._http.get(this.baseURL +"/findbycategory"+ `/${category_id}`);
   }
+  getCakeByCategoryIdspecial(category_id: string) {
+    return this._http.get(this.baseURL +"/findbycategoryspecial"+ `/${category_id}`);
+  }
   getCakeByAuthorId(author_id: string) {
     return this._http.get(this.baseURL +"/findbyauthor"+ `/${author_id}`);
   }

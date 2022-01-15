@@ -9,6 +9,7 @@
      sale: Number,
      quantity: Number,
      rate: Object,
+     spdacbiet : Boolean
  });
 
  module.exports = mongoose.model('cakes', cakeSchema);
